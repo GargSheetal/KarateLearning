@@ -30,14 +30,23 @@ Feature: Get API tests
     Then status 200
     And print response
 
-	#	response can be replaced with $ symbol
+  # get request with query params
+  Scenario: Get all users
+    * def query = {page : 2}
+    Given path '/users'
+    And params query
+    When method GET
+    Then status 200
+    And print response
+
+  #	response can be replaced with $ symbol
   # get request with assertions
   Scenario: Get all users
-    Given path '/users?page=2'
+    Given path '/users'
     And param page = 2
     When method GET
     Then status 200
     And print response
     And match response.data[0].first_name != null
     And assert response.data.length == 6
-    And match $.data[3].id = 10
+    And match $.data[3].id == 10

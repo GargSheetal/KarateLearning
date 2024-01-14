@@ -38,6 +38,7 @@ Feature: Post API tests
     Then status 201
     And match $ == expectedOutput
     And print response
+    And match $.name = '#present'
 
   # Post with read request body from file
   Scenario: create a user 5
