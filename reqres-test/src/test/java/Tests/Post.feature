@@ -4,11 +4,26 @@ Feature: Post API tests
     * url 'https://reqres.in/api'
     * header Accept = 'application/json'
     * def expectedOutput = read("response1.json")
+    * def requestBody =
+      """
+      {
+      	"name": "Shama",
+      	"job": "Architect"
+      }
+      """
 
   # Simple post request
   Scenario: create user test 1
     Given url 'https://reqres.in/api/users'
     And request { "name": "Shama", "job": "Architect" }
+    When method POST
+    Then status 201
+    And print response
+
+  # Simple post request
+  Scenario: create user test 2 with request body from variable in background
+    Given url 'https://reqres.in/api/users'
+    And request requestBody
     When method POST
     Then status 201
     And print response
@@ -49,7 +64,7 @@ Feature: Post API tests
     Then status 201
     And match $ == expectedOutput
     And print response
-    
+
   # Post with read request body from file in a separate folder
   Scenario: create a user 6
     Given path '/users'
@@ -61,7 +76,7 @@ Feature: Post API tests
     Then status 201
     And match $ == expectedOutput
     And print response
-  
+
   # Post with read request body from file and change value
   Scenario: create a user 7
     Given path '/users'
@@ -72,8 +87,3 @@ Feature: Post API tests
     Then status 201
     And match $ == expectedOutput
     And print response
-  
-  
-  
-  
-  
